@@ -1,6 +1,6 @@
 import nc from 'next-connect';
 import dbConnect from '../../../config/dbConnect';
-import { allRooms, newRoom } from '../../../controllers/roomController';
+import { allRooms, newRoom } from '../../../controllers/roomControllers';
 
 const handler = nc();
 dbConnect();
