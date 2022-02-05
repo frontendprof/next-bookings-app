@@ -1,13 +1,26 @@
 import catchAsyncError from '../middlewares/catchAsyncError';
 import Room from '../models/room';
+import APICalls from '../utils/apiCalls';
 import ErrorHandler from '../utils/errorHandler';
 
 // All rooms
 const allRooms = catchAsyncError(async (req, res) => {
-  const rooms = await Room.find();
+  // const rooms = await Room.find();
+  const resPerPage = 4;
+  const roomsCount = await Room.countDocuments();
+
+  const ApiCalls = new APICalls(Room.find(), req.query).search().filter();
+  let rooms = await ApiCalls.query;
+  let filteredRoomCounts = rooms.length;
+
+  ApiCalls.pagination(resPerPage);
+  rooms = await ApiCalls.query;
+
   res.status(200).json({
     success: true,
-    count: rooms.length,
+    roomsCount,
+    resPerPage,
+    filteredRoomCounts,
     rooms,
   });
 });
