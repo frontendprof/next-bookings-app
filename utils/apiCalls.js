@@ -20,12 +20,10 @@ class APICalls {
   filter() {
     const queryCopy = { ...this.queryString };
 
-    console.log(queryCopy);
     // Removing a field
     const removeField = ['location', 'page'];
     removeField.forEach((el) => delete queryCopy[el]);
 
-    console.log(queryCopy);
     this.query = this.query.find(queryCopy);
     return this;
   }
