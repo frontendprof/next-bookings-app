@@ -3,6 +3,8 @@ import Image from 'next/image';
 import Layout from '../components/layout/Layout';
 import Home from '../components/layout/Home';
 import styles from '../styles/Home.module.css';
+import { getRooms } from '../redux/actions/roomActions';
+import { wrapper } from '../redux/store';
 
 export default function Index() {
   return (
@@ -18,3 +20,7 @@ export default function Index() {
     </div>
   );
 }
+
+export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ req, res }) => {
+  await store.dispatch(getRooms(req));
+});
